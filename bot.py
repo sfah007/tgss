@@ -1,7 +1,6 @@
 import config
 import logging
 import imgkit
-import uuid
 
 from aiogram import Bot, Dispatcher, executor, types
 
@@ -18,9 +17,30 @@ async def screenshot(message: types.Message):
 
 @dp.message_handler()
 async def echo(message: types.Message):
-    path_to_img = f"{uuid.uuid4()}.jpg"
-    imgkit.from_url(message.text, path_to_img)
-    await message.answer(path_to_img)
+    options = {
+        'format': 'png',
+        'width': 1920,
+        'height': 1080,
+        'disable-smart-width': '',
+        'encoding': "UTF-8",
+        'javascript-delay': 10,
+        'custom-header': [
+            ('User-Agent',
+             'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36')
+        ],
+    }
+
+    await message.answer('подождите пожалуйста')
+
+    try:
+        img = imgkit.from_url(message.text, False, options=options)
+        await bot.send_photo(
+            message['from']['id'],
+            img,
+            caption=message.text
+        )
+    except:
+        await message.answer('Укажите правильный адрес к сайту! Сайт не отвечает либо указан не верно')
 
 
 if __name__ == '__main__':
