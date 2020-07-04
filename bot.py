@@ -4,6 +4,10 @@ import imgkit
 
 from aiogram import Bot, Dispatcher, executor, types
 
+
+path_wkthmltoimage = config.PATH_TO_WKHTMLTOPDF
+img_config = imgkit.config(wkhtmltoimage=path_wkthmltoimage)
+
 logging.basicConfig(level=logging.INFO)
 
 bot = Bot(token=config.API_TOKEN)
@@ -33,7 +37,7 @@ async def echo(message: types.Message):
     await message.answer('подождите пожалуйста')
 
     try:
-        img = imgkit.from_url(message.text, False, options=options)
+        img = imgkit.from_url(message.text, False, options=options, config=img_config)
         await bot.send_photo(
             message['from']['id'],
             img,
