@@ -10,7 +10,7 @@ img_config = imgkit.config(wkhtmltoimage=path_wkthmltoimage)
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot(token=config.API_TOKEN)
+bot = Bot(token=config.1190702784:AAHsxCxyoTdJbifoQqXXHAPBvBZ6wGo2344)
 dp = Dispatcher(bot)
 
 
